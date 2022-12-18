@@ -7,6 +7,22 @@ import java.nio.file.StandardOpenOption;
 import java.util.Scanner;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+class support
+{
+    private int count;
+    public support()
+    {
+        
+    }
+    public int getcount()
+    {
+        return count;
+    }
+     public void setcount(int k)
+    {
+        count=k;
+    }
+}
 //Пациент
 class patient 
 {
@@ -14,12 +30,14 @@ class patient
 	private String name = "";
 	private String diagnosis ="";
 	private String state = "";
-	public patient(int new_id, String new_patient_name, String new_diagnosis, String new_state)
+	private static int Count;
+	public support sup=new support();
+	public patient(int id, String patient_name, String diagnosis, String state)
 	{
-		id = new_id;
-		name= new_patient_name;
-		diagnosis=new_diagnosis;
-		state=new_state;
+		this.id = id;
+		this.name= patient_name;
+		this.diagnosis=diagnosis;
+		this.state=state;
 	}
 
 	public patient()
@@ -29,6 +47,22 @@ class patient
 		final String diagnosis = "";
 		final String state = "";
 	}
+	///////Статичная функция и работа со статичной переменной
+	public static int empty_Count(int lines)
+	{
+	    return 30-lines;
+	}
+	public void setCount(int a)
+	{
+	    Count=a;
+	    sup.setcount(Count);
+	    
+	}
+	public int getCount()
+	{
+	    return sup.getcount();
+	}
+	////////
 	public final void close()
 	{
 
@@ -491,13 +525,13 @@ class status
 		{
 			check_lines = 0;
 			patients[0].out(patients);
-			System.out.print("Введите:\n1-для просмотра данных о пациенте\n2-для просмотра данных о болезни\n3-для просмотра состояния пациета\n4-для удаления строки\n5-для добавления строки\n6-Записать таблицу в файл\n7-закрыть программу\n");
+			System.out.print("Введите:\n1-для просмотра данных о пациенте\n2-для просмотра данных о болезни\n3-для просмотра состояния пациета\n4-для удаления строки\n5-для добавления строки\n6-Записать таблицу в файл\n7-закрыть программу\n8-показать кол-во свободных месь\n");
 			int choice_patient;
 			int choice_doctor;
 			do
 			{
 				choice_patient=in.nextInt();
-			} while (choice_patient > 7 || choice_patient < 1);
+			} while (choice_patient > 8 || choice_patient < 1);
 			switch (choice_patient)
 			{
 			   //просмотр данных о пациенте
@@ -677,6 +711,13 @@ class status
 			case 7:
 				repeat = 0;
 				break;
+			case 8:
+			    int pomosh,res;
+			    pomosh=patients[0].empty_Count(total_lines);
+			    patients[0].setCount(pomosh);
+			    res=patients[0].getCount();
+			    System.out.printf("Свободных мест:%d\n", res);
+			    break;
 			default:
 				break;
 			}
